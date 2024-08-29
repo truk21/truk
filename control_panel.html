@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Cambiado a inglés -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrukMining - Cryptocurrency Mining Platform</title> <!-- Cambiado el título a inglés -->
+  <style>
+    :root {
+      --primary-color: #f0b90b;
+      --secondary-color: #1e2026;
+      --text-color: #eaecef;
+      --background-color: #0b0e11;
+      --card-background: #2c2f36;
+      --success-color: #0ecb81;
+      --error-color: #f6465d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background-color: var(--secondary-color);
+      padding: 20px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      height: 50px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    /* Mover el selector de idioma al lado del botón de cerrar sesión */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    main {
+      padding: 40px 0;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: var(--card-background);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background-color: #d4a303;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid var(--secondary-color);
+      border-radius: 5px;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--secondary-color);
+    }
+
+    th {
+      background-color: var(--secondary-color);
+      font-weight: bold;
+    }
+
+    .message {
+      background-color: rgba(240, 185, 11, 0.2);
+      border-left: 4px solid var(--primary-color);
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+
+    .user-icon {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .user-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--primary-color);
+    }
+
+    .mining-time {
+      font-size: 14px;
+      color: white;
+    }
+
+    .mining-block {
+      border: 1px solid var(--primary-color);
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .mining-gif {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .flag-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .flag-container img {
+      width: 30px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <div class="logo-container">
+        <img src="images/1.png" alt="Icon">
+        <div class="logo">TrukMining</div>
+      </div>
+      <div class="nav-right">
+        <div class="language-selector">
+          <select id="languageSelect">
+            <option value="en" selected>English</option> <!-- Inglés por defecto -->
+            <option value="es">Español</option>
+          </select>
+        </div>
+        <button id="logoutBtn">Logout</button> <!-- Cambiado a inglés -->
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="dashboard">
+      <!-- Sección de Perfil de Usuario -->
+      <section id="profile" class="card">
+        <h2>User Profile</h2> <!-- Cambiado a inglés -->
+        <p>User ID: <span id="userId"></span></p> <!-- Cambiado a inglés -->
+        <p>Email: <span id="userEmail"></span></p> <!-- Cambiado a inglés -->
+        <h3>Update Profile</h3> <!-- Cambiado a inglés -->
+        <input type="email" id="newEmail" placeholder="New email"> <!-- Cambiado a inglés -->
+        <input type="password" id="newPassword" placeholder="New password"> <!-- Cambiado a inglés -->
+        <input type="password" id="confirmPassword" placeholder="Confirm password"> <!-- Nuevo campo añadido -->
+        <button id="saveProfileBtn">Save Changes</button> <!-- Cambiado a inglés -->
+        <p>Invitation Code: <span id="invitationCode"></span> <button id="copyCodeBtn">Copy</button></p> <!-- Cambiado a inglés -->
+      </section>
+
+      <!-- Sección de Minería -->
+      <section id="mining" class="card">
+        <h2>Mining Balance</h2> <!-- Cambiado a inglés -->
+        <img src="https://github.com/rukicoin/coinruki/blob/914732f363729931cd92f0799481d6527265197a/Dise%C3%B1o%20sin%20t%C3%ADtulo.gif?raw=true" alt="Mining GIF" class="mining-gif">
+        <p>Total Earnings: <span id="totalEarnings">0.000000</span> USDT</p> <!-- Cambiado a inglés -->
+        <p>Total Balance: <span id="miningBalance">0.000000</span> USDT</p> <!-- Cambiado a inglés -->
+        <div id="miningBlocks"></div>
+        <input type="number" id="investmentAmount" placeholder="Amount to invest (min. 25 USDT)"> <!-- Cambiado a inglés -->
+        <select id="miningDuration">
+          <option value="">Select duration</option> <!-- Cambiado a inglés -->
+          <option value="6">6 months</option>
+          <option value="9">9 months</option>
+          <option value="12">1 year</option>
+          <option value="24">2 years</option>
+        </select>
+        <button id="startMiningBtn">Start Mining</button> <!-- Cambiado a inglés -->
+        <button id="transferToDepositBtn" style="display:none;">Transfer Earnings to Deposit</button> <!-- Cambiado a inglés -->
+      </section>
+
+      <!-- Sección de Depósito y Retiro -->
+      <section id="depositWithdraw" class="card">
+        <h2>Deposit and Withdrawal Balance</h2> <!-- Cambiado a inglés -->
+        <p>Balance: <span id="depositBalance">0.000000</span> USDT</p> <!-- Cambiado a inglés -->
+        <h3>Deposit</h3> <!-- Cambiado a inglés -->
+        <input type="number" id="depositAmount" placeholder="Amount to deposit"> <!-- Cambiado a inglés -->
+        <button id="transferToMiningBtn">Transfer to Mining</button> <!-- Cambiado a inglés -->
+        <p>Deposit Wallet: <span id="depositWallet">TCTjdRPpv2s17Dd6qd116uoxCL2Kub2GJg</span> 
+          <button id="copyWalletBtn" style="margin-right: 10px;">Copy Address</button> <!-- Cambiado a inglés -->
+          <button id="processDepositBtn">Process Deposit</button> <!-- Cambiado a inglés -->
+        </p>
+        <h3>Withdraw</h3> <!-- Cambiado a inglés -->
+        <input type="text" id="withdrawWallet" placeholder="Withdrawal Wallet (TRC20)"> <!-- Cambiado a inglés -->
+        <button id="saveWalletBtn">Save Wallet</button> <!-- Cambiado a inglés -->
+        <input type="number" id="withdrawAmount" placeholder="Amount to withdraw"> <!-- Cambiado a inglés -->
+        <p>Withdrawal Fee: 4%</p> <!-- Cambiado a inglés -->
+        <button id="withdrawBtn">Withdraw Earnings</button> <!-- Cambiado a inglés -->
+      </section>
+
+      <!-- Sección de Historial de Transacciones -->
+      <section id="transactions" class="card">
+        <h2>Transaction History</h2> <!-- Cambiado a inglés -->
+        <table id="transactionHistory">
+          <thead>
+            <tr>
+              <th>Date</th> <!-- Cambiado a inglés -->
+              <th>Type</th> <!-- Cambiado a inglés -->
+              <th>Amount</th> <!-- Cambiado a inglés -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- El historial se llenará dinámicamente con JavaScript -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Sección de Políticas y Soporte -->
+      <section id="support" class="card">
+        <h2>Support and Information</h2> <!-- Cambiado a inglés -->
+        <p class="user-icon">
+          Active Users: <span id="activeUsers">5150</span> <!-- Cambiado a inglés -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </p>
+        <div class="flag-container">
+          <img src="images/3.png" alt="Spain">
+          <img src="images/4.png" alt="USA">
+          <img src="images/5.png" alt="France">
+          <img src="images/6.png" alt="France">
+          <img src="images/7.png" alt="France">
+        </div>
+        <button id="privacyPolicyBtn" style="margin-top: 20px;">Privacy Policy</button> <!-- Cambiado a inglés -->
+        <button id="cryptoInfoBtn" style="margin-top: 20px;">Information about TrukMining</button> <!-- Cambiado a inglés -->
+        <div id="privacyPolicy" class="message" style="display: none;">
+          <h3>Privacy Policy</h3> <!-- Cambiado a inglés -->
+          <p>At TrukMining, we value and protect your privacy. Our policies include:</p> <!-- Cambiado a inglés -->
+          <ul>
+            <li>Limited collection of personal data necessary for service operation.</li> <!-- Cambiado a inglés -->
+            <li>We do not share your information with third parties without your explicit consent.</li> <!-- Cambiado a inglés -->
+            <li>We use data encryption to protect your financial and personal information.</li> <!-- Cambiado a inglés -->
+            <li>You have the right to request access, correction, or deletion of your personal data.</li> <!-- Cambiado a inglés -->
+            <li>We regularly update our security measures to protect against unauthorized access.</li> <!-- Cambiado a inglés -->
+          </ul>
+        </div>
+        <div id="cryptoInfo" class="message" style="display: none;">
+          <h3>Deposits in TrukMining</h3> <!-- Cambiado a inglés -->
+          <p>When you make a deposit, please note that the amount may take between 15 to 20 minutes to reflect in your balance. In some cases, the crediting may be instantaneous. This waiting time is necessary for transaction verification, ensuring that your amount arrives safely in your TrukMining balance.</p> <!-- Cambiado a inglés -->
+          <h3>Frequently Asked Questions</h3> <!-- Cambiado a inglés -->
+          <p><strong>How can I start mining?</strong><br>
+            To start mining, simply sign up on our platform, make an initial deposit, and choose the plan that best suits your needs. Our system will automatically start mining for you. You will earn 1.2% of the initial amount if you invest between 25 USDT and 500 USDT. For investments over 500 USDT, you will start earning 1.5%. Please note that the amount you invest will be locked according to the time you choose: you can opt for plans of 6 months, 9 months, 1 year, or 2 years. You can withdraw your earnings whenever you want or reinvest them to grow your capital.</p> <!-- Cambiado a inglés -->
+          <p>Additionally, our referral program allows you to earn from 2 USDT to 10 USDT per referral, depending on the capital invested by the referred user. These earnings will be added directly to your balance.</p> <!-- Cambiado a inglés -->
+          <p>As an additional incentive, we offer special bonuses ranging from 10 USDT to 50 USDT. These bonuses are a reward for users who maintain their capital or investments during the chosen time. Users can withdraw this balance or use it to increase their capital. It is important to note that these bonuses are raffled among users who invest from 50 USDT onwards, and may appear after a month of making the investment. It's our way of thanking you for your trust and commitment to TrukMining!</p> <!-- Cambiado a inglés -->
+          <p><strong>What withdrawal methods are available?</strong><br>
+            The only withdrawal method available is through USDT wallet on the TRC20 network. This method guarantees fast and secure transactions for our users.</p> <!-- Cambiado a inglés -->
+          <p><strong>What is the processing time for withdrawals?</strong><br>
+            Withdrawals are generally processed within 24-48 business hours. However, times may vary depending on the selected withdrawal method and the necessary security checks.</p> <!-- Cambiado a inglés -->
+        </div>
+        <h3>Contact</h3> <!-- Cambiado a inglés -->
+        <p>Email: support@trukmining.com</p> <!-- Cambiado a inglés -->
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Variables globales
+    let userId = 'USR' + Math.random().toString(36).substr(2, 9);
+    let userEmail = 'user@example.com'; // Cambiado a inglés
+    let invitationCode = 'INV' + Math.random().toString(36).substr(2, 6).toUpperCase();
+    let miningBalance = 0; // 
+    let depositBalance = 0; 
+    let activeUsers = 5150;
+
+    // Lista de bloques de minería
+    let miningBlocks = [];
+    let totalEarnings = 0; // Ganancias totales acumuladas
+
+    // Funciones de utilidad
+    function updateUI() {
+      document.getElementById('miningBalance').textContent = miningBalance.toFixed(6);
+      document.getElementById('depositBalance').textContent = depositBalance.toFixed(6);
+      document.getElementById('totalEarnings').textContent = totalEarnings.toFixed(6);
+      document.getElementById('userId').textContent = userId;
+      document.getElementById('userEmail').textContent = userEmail;
+      document.getElementById('invitationCode').textContent = invitationCode;
+      document.getElementById('activeUsers').textContent = activeUsers;
+
+      // Actualizar visualización de bloques de minería
+      const miningBlocksDiv = document.getElementById('miningBlocks');
+      miningBlocksDiv.innerHTML = '';
+      miningBlocks.forEach((block, index) => {
+        const blockDiv = document.createElement('div');
+        blockDiv.classList.add('mining-block');
+        blockDiv.innerHTML = `
+          <p>Investment: ${block.amount.toFixed(6)} USDT</p> <!-- Cambiado a inglés -->
+          <p>Interest Rate: ${(block.dailyRate * 100).toFixed(2)}%</p> <!-- Cambiado a inglés -->
+          <p>Locked Balance: ${block.amount.toFixed(6)} USDT</p> <!-- Cambiado a inglés -->
+          <p>Earnings: ${block.earnings.toFixed(6)} USDT</p> <!-- Cambiado a inglés -->
+          <p>Remaining Time: <span id="remainingTime${index}">${formatTime(block.remainingSeconds)}</span></p> <!-- Cambiado a inglés -->
+        `;
+        miningBlocksDiv.appendChild(blockDiv);
+      });
+    }
+
+    function formatTime(seconds) {
+      const days = Math.floor(seconds / (24 * 60 * 60));
+      const hours = Math.floor((seconds % (24 * 60 * 60)) / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const remainingSeconds = seconds % 60;
+      return `${days}d ${hours}h ${minutes}m ${remainingSeconds}s`;
+    }
+
+    function addTransaction(type, amount) {
+      const table = document.getElementById('transactionHistory').getElementsByTagName('tbody')[0];
+      const newRow = table.insertRow(0);
+      const dateCell = newRow.insertCell(0);
+      const typeCell = newRow.insertCell(1);
+      const amountCell = newRow.insertCell(2);
+
+      dateCell.textContent = new Date().toLocaleString();
+      typeCell.textContent = type;
+      amountCell.textContent = amount.toFixed(6) + ' USDT';
+    }
+
+    // Función para iniciar la minería
+    function startMining() {
+      const amount = parseFloat(document.getElementById('investmentAmount').value);
+      const duration = parseInt(document.getElementById('miningDuration').value);
+
+      if (amount < 25 || !duration) {
+        alert('Please enter a valid amount (minimum 25 USDT) and select a duration.'); // Cambiado a inglés
+        return;
+      }
+
+      if (amount > miningBalance) {
+        alert('Insufficient balance.'); // Cambiado a inglés
+        return;
+      }
+
+      const dailyRate = amount >= 500 ? 0.015 : 0.012;
+      const remainingSeconds = duration * 30 * 24 * 60 * 60; // Convertir meses a segundos
+
+      const block = { amount, dailyRate, remainingSeconds, earnings: 0 };
+      miningBlocks.push(block);
+      miningBalance -= amount;
+      updateUI();
+
+      const blockIndex = miningBlocks.length - 1;
+      miningBlocks[blockIndex].interval = setInterval(() => {
+        miningBlocks[blockIndex].remainingSeconds--;
+        const dailyProfit = amount * dailyRate / (24 * 60 * 60);
+        block.earnings += dailyProfit;
+        totalEarnings += dailyProfit;
+        updateUI();
+
+        if (miningBlocks[blockIndex].remainingSeconds <= 0) {
+          clearInterval(miningBlocks[blockIndex].interval);
+          alert(`The ${duration} months mining period has ended for the investment of ${amount.toFixed(6)} USDT.`); // Cambiado a inglés
+        }
+      }, 1000); // Simulamos 1 segundo real como 1 día en la plataforma
+
+      addTransaction('Start Mining', -amount); // Cambiado a inglés
+
+      // Mostrar botón de transferencia de ganancias
+      document.getElementById('transferToDepositBtn').style.display = 'inline-block';
+    }
+
+    // Función para calcular y mostrar las comisiones de referidos
+    function calculateReferralCommission(invAmount) {
+      let commission = 0;
+      if (invAmount >= 25 && invAmount <= 99) {
+        commission = 2;
+      } else if (invAmount >= 100 && invAmount <= 499) {
+        commission = 5;
+      } else if (invAmount >= 500) {
+        commission = 10;
+      }
+      if (commission > 0) {
+        depositBalance += commission;
+        addTransaction('Referral Commission', commission); // Cambiado a inglés
+      }
+    }
+
+    // Función para transferir ganancias al balance de depósito
+    function transferToDeposit() {
+      let earningsToTransfer = 0;
+      miningBlocks.forEach(block => {
+        earningsToTransfer += block.earnings;
+        block.earnings = 0; // Reiniciar ganancias después de transferir
+      });
+
+      totalEarnings -= earningsToTransfer;
+      depositBalance += earningsToTransfer;
+      updateUI();
+      addTransaction('Transfer to Deposit', earningsToTransfer); // Cambiado a inglés
+      alert(`Transfer of ${earningsToTransfer.toFixed(6)} USDT successfully made to deposit balance.`); // Cambiado a inglés
+    }
+
+    // Función para transferir saldo de depósito a minería
+    function transferToMining() {
+      const amount = depositBalance;
+
+      if (amount <= 0) {
+        alert('Insufficient deposit balance.'); // Cambiado a inglés
+        return;
+      }
+
+      depositBalance -= amount;
+      miningBalance += amount;
+      updateUI();
+      addTransaction('Transfer to Mining', amount); // Cambiado a inglés
+    }
+
+    // Función para procesar depósito
+    function processDeposit() {
+      const amount = parseFloat(document.getElementById('depositAmount').value);
+
+      if (amount <= 0) {
+        alert('Please enter a valid amount to deposit.'); // Cambiado a inglés
+        return;
+      }
+
+      depositBalance += amount;
+      updateUI();
+      addTransaction('Deposit', amount); // Cambiado a inglés
+      alert(`Deposit of ${amount.toFixed(6)} USDT successfully made.`); // Cambiado a inglés
+    }
+
+    // Función para retirar ganancias
+    function withdraw() {
+      const amount = parseFloat(document.getElementById('withdrawAmount').value);
+
+      if (amount > depositBalance) {
+        alert('Insufficient deposit balance.'); // Cambiado a inglés
+        return;
+      }
+
+      depositBalance -= amount;
+      const netAmount = amount * 0.96; // Aplicar tasa de retiro del 4%
+      updateUI();
+      addTransaction('Withdraw Earnings', -netAmount); // Cambiado a inglés
+      alert(`Withdrawal of ${netAmount.toFixed(6)} USDT successfully made (after applying the 4% fee).`); // Cambiado a inglés
+    }
+
+    // Función para guardar cambios en el perfil
+    function saveProfile() {
+      const newEmail = document.getElementById('newEmail').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (newPassword !== confirmPassword) {
+        alert('Passwords do not match. Please try again.'); // Cambiado a inglés
+        return;
+      }
+
+      if (newEmail) {
+        userEmail = newEmail;
+      }
+
+      if (newPassword) {
+        alert('Password updated successfully'); // Cambiado a inglés
+      }
+
+      updateUI();
+    }
+
+    // Event Listeners
+    document.getElementById('startMiningBtn').addEventListener('click', startMining);
+    document.getElementById('transferToDepositBtn').addEventListener('click', transferToDeposit);
+    document.getElementById('transferToMiningBtn').addEventListener('click', transferToMining);
+    document.getElementById('processDepositBtn').addEventListener('click', processDeposit);
+    document.getElementById('withdrawBtn').addEventListener('click', withdraw);
+    document.getElementById('saveProfileBtn').addEventListener('click', saveProfile);
+
+    document.getElementById('copyWalletBtn').addEventListener('click', () => {
+      const walletAddress = document.getElementById('depositWallet').textContent;
+      navigator.clipboard.writeText(walletAddress).then(() => {
+        alert('Wallet address copied to clipboard'); // Cambiado a inglés
+      });
+    });
+
+    document.getElementById('saveWalletBtn').addEventListener('click', () => {
+      const wallet = document.getElementById('withdrawWallet').value;
+      if (wallet) {
+        alert('Wallet saved for future withdrawals'); // Cambiado a inglés
+      }
+    });
+
+    document.getElementById('copyCodeBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(invitationCode).then(() => {
+        alert('Invitation code copied to clipboard'); // Cambiado a inglés
+      });
+    });
+
+    document.getElementById('privacyPolicyBtn').addEventListener('click', () => {
+      const privacyPolicy = document.getElementById('privacyPolicy');
+      privacyPolicy.style.display = privacyPolicy.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('cryptoInfoBtn').addEventListener('click', () => {
+      const cryptoInfo = document.getElementById('cryptoInfo');
+      cryptoInfo.style.display = cryptoInfo.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      window.location.href = "index.html";
+    });
+
+    // Script para cambiar el idioma
+    const languageSelect = document.getElementById('languageSelect');
+
+    languageSelect.addEventListener('change', (event) => {
+      const language = event.target.value;
+      if (language === 'es') {
+        document.documentElement.lang = 'es';
+        // Cambiar el contenido de la página a español
+        document.title = 'TrukMining - Plataforma de Minería de Criptomonedas';
+        document.getElementById('logoutBtn').textContent = 'Cerrar Sesión';
+        document.querySelector('#profile h2').textContent = 'Perfil de Usuario';
+        document.querySelector('#profile h3').textContent = 'Actualizar Perfil';
+        document.querySelector('#profile input[type="email"]').placeholder = 'Nuevo correo electrónico';
+        document.querySelector('#profile input[type="password"]').placeholder = 'Nueva contraseña';
+        document.getElementById('confirmPassword').placeholder = 'Confirmar contraseña'; // Placeholder en español
+        document.getElementById('saveProfileBtn').textContent = 'Guardar Cambios';
+        document.querySelector('#profile p:nth-child(9)').innerHTML = 'Código de Invitación: <span id="invitationCode"></span> <button id="copyCodeBtn">Copiar</button>';
+        document.querySelector('#mining h2').textContent = 'Balance de Minería';
+        document.querySelector('#mining p:first-child').innerHTML = 'Ganancias Totales: <span id="totalEarnings">0.000000</span> USDT';
+        document.querySelector('#mining p:nth-child(3)').innerHTML = 'Balance Total: <span id="miningBalance">1000.000000</span> USDT';
+        document.getElementById('investmentAmount').placeholder = 'Monto a invertir (min. 25 USDT)';
+        document.querySelector('#mining select option:first-child').textContent = 'Seleccione duración';
+        document.querySelector('#mining select option[value="6"]').textContent = '6 meses';
+        document.querySelector('#mining select option[value="9"]').textContent = '9 meses';
+        document.querySelector('#mining select option[value="12"]').textContent = '1 año';
+        document.querySelector('#mining select option[value="24"]').textContent = '2 años';
+        document.getElementById('startMiningBtn').textContent = 'Iniciar Minería';
+        document.getElementById('transferToDepositBtn').textContent = 'Transferir Ganancias a Depósito';
+        document.querySelector('#depositWithdraw h2').textContent = 'Balance de Depósito y Retiro';
+        document.querySelector('#depositWithdraw h3:first-child').textContent = 'Depósito';
+        document.getElementById('depositAmount').placeholder = 'Monto a depositar';
+        document.getElementById('transferToMiningBtn').textContent = 'Transferir a Minería';
+        document.querySelector('#depositWithdraw p').innerHTML = 'Billetera de depósito: <span id="depositWallet">TCTjdRPpv2s17Dd6qd116uoxCL2Kub2GJg</span> <button id="copyWalletBtn" style="margin-right: 10px;">Copiar Dirección</button><button id="processDepositBtn">Procesar Depósito</button>';
+        document.querySelector('#depositWithdraw h3:nth-child(7)').textContent = 'Retiro';
+        document.getElementById('withdrawWallet').placeholder = 'Billetera de retiro (TRC20)';
+        document.getElementById('saveWalletBtn').textContent = 'Guardar Billetera';
+        document.getElementById('withdrawAmount').placeholder = 'Monto a retirar';
+        document.querySelector('#depositWithdraw p:nth-child(10)').textContent = 'Tasa de retiro: 4%';
+        document.getElementById('withdrawBtn').textContent = 'Retirar Ganancias';
+        document.querySelector('#transactions h2').textContent = 'Historial de Transacciones';
+        document.querySelector('#transactionHistory th:nth-child(1)').textContent = 'Fecha';
+        document.querySelector('#transactionHistory th:nth-child(2)').textContent = 'Tipo';
+        document.querySelector('#transactionHistory th:nth-child(3)').textContent = 'Cantidad';
+        document.querySelector('#support h2').textContent = 'Soporte e Información';
+        document.querySelector('#support p.user-icon').innerHTML = 'Usuarios activos: <span id="activeUsers">5150</span>';
+        document.getElementById('privacyPolicyBtn').textContent = 'Políticas de Privacidad';
+        document.getElementById('cryptoInfoBtn').textContent = 'Información sobre TrukMining';
+        document.querySelector('#privacyPolicy h3').textContent = 'Políticas de Privacidad';
+        document.querySelector('#privacyPolicy ul').innerHTML = `
+          <li>Recopilación limitada de datos personales necesarios para el funcionamiento del servicio.</li>
+          <li>No compartimos su información con terceros sin su consentimiento explícito.</li>
+          <li>Utilizamos encriptación de datos para proteger su información financiera y personal.</li>
+          <li>Usted tiene derecho a solicitar acceso, corrección o eliminación de sus datos personales.</li>
+          <li>Actualizamos regularmente nuestras medidas de seguridad para proteger contra accesos no autorizados.</li>
+        `;
+        document.querySelector('#cryptoInfo h3').textContent = 'Depósitos en TrukMining';
+        document.querySelector('#cryptoInfo p:first-child').textContent = 'Cuando realices un depósito, ten en cuenta que el monto puede tardar entre 15 a 20 minutos en reflejarse en tu balance. En algunas ocasiones, la acreditación puede ser instantánea. Este tiempo de espera es necesario para la verificación de la transacción, asegurando que tu monto llegue de forma segura a tu balance en Trukmining.';
+        document.querySelector('#cryptoInfo h3:nth-child(3)').textContent = 'Preguntas Frecuentes';
+        document.querySelector('#cryptoInfo p:nth-child(4)').innerHTML = `
+          <strong>¿Cómo puedo comenzar a minar?</strong><br>
+          Para comenzar a minar, simplemente regístrate en nuestra plataforma, realiza un depósito inicial y elige el plan que mejor se adapte a tus necesidades. Nuestro sistema comenzará a minar automáticamente para ti. Ganarás el 1,2% del monto inicial si inviertes entre 25 USDT y 500 USDT. Para inversiones superiores a 500 USDT, comenzarás a ganar el 1,5%. Ten en cuenta que el monto que inviertas quedará bloqueado según el tiempo que escojas: puedes optar por planes de 6 meses, 9 meses, 1 año o 2 años. Puedes retirar tus ganancias cuando quieras o reinvertirlas para que crezca tu capital.
+        `;
+        document.querySelector('#cryptoInfo p:nth-child(5)').innerHTML = `
+          Además, nuestro programa de referidos te permite ganar de 2 USDT a 10 USDT por cada referido, dependiendo del capital invertido por el usuario referido. Estas ganancias serán añadidas directamente a tu balance.
+        `;
+        document.querySelector('#cryptoInfo p:nth-child(6)').innerHTML = `
+          Como incentivo adicional, ofrecemos bonificaciones especiales que van desde 10 USDT hasta 50 USDT. Estas bonificaciones son una recompensa para los usuarios que mantienen su capital o inversiones durante el tiempo escogido. Los usuarios pueden retirar este saldo o usarlo para incrementar su capital. Es importante tener en cuenta que estas bonificaciones se sortean entre los usuarios que invierten desde 50 USDT en adelante, y pueden aparecer después de un mes de haber realizado la inversión. ¡Es nuestra forma de agradecer tu confianza y compromiso con Trukmining!
+        `;
+        document.querySelector('#cryptoInfo p:nth-child(7)').innerHTML = `
+          <strong>¿Cuáles son los métodos de retiro disponibles?</strong><br>
+          El único método de retiro disponible es a través de billetera USDT en la red TRC20. Este método garantiza transacciones rápidas y seguras para nuestros usuarios.
+        `;
+        document.querySelector('#cryptoInfo p:nth-child(8)').innerHTML = `
+          <strong>¿Cuál es el tiempo de procesamiento para los retiros?</strong><br>
+          Los retiros generalmente se procesan dentro de 24-48 horas hábiles. Sin embargo, los tiempos pueden variar dependiendo del método de retiro seleccionado y las verificaciones de seguridad necesarias.
+        `;
+        document.querySelector('#support h3').textContent = 'Contacto';
+        document.querySelector('#support p:last-child').textContent = 'Correo: soporte@trukmining.com';
+      } else if (language === 'en') {
+        document.documentElement.lang = 'en';
+        // Cambiar el contenido de la página a inglés
+        document.title = 'TrukMining - Cryptocurrency Mining Platform';
+        document.getElementById('logoutBtn').textContent = 'Logout';
+        document.querySelector('#profile h2').textContent = 'User Profile';
+        document.querySelector('#profile h3').textContent = 'Update Profile';
+        document.querySelector('#profile input[type="email"]').placeholder = 'New email';
+        document.querySelector('#profile input[type="password"]').placeholder = 'New password';
+        document.getElementById('confirmPassword').placeholder = 'Confirm password'; // Placeholder en inglés
+        document.getElementById('saveProfileBtn').textContent = 'Save Changes';
+        document.querySelector('#profile p:nth-child(9)').innerHTML = 'Invitation Code: <span id="invitationCode"></span> <button id="copyCodeBtn">Copy</button>';
+        document.querySelector('#mining h2').textContent = 'Mining Balance';
+        document.querySelector('#mining p:first-child').innerHTML = 'Total Earnings: <span id="totalEarnings">0.000000</span> USDT';
+        document.querySelector('#mining p:nth-child(3)').innerHTML = 'Total Balance: <span id="miningBalance">1000.000000</span> USDT';
+        document.getElementById('investmentAmount').placeholder = 'Amount to invest (min. 25 USDT)';
+        document.querySelector('#mining select option:first-child').textContent = 'Select duration';
+        document.querySelector('#mining select option[value="6"]').textContent = '6 months';
+        document.querySelector('#mining select option[value="9"]').textContent = '9 months';
+        document.querySelector('#mining select option[value="12"]').textContent = '1 year';
+        document.querySelector('#mining select option[value="24"]').textContent = '2 years';
+        document.getElementById('startMiningBtn').textContent = 'Start Mining';
+        document.getElementById('transferToDepositBtn').textContent = 'Transfer Earnings to Deposit';
+        document.querySelector('#depositWithdraw h2').textContent = 'Deposit and Withdrawal Balance';
+        document.querySelector('#depositWithdraw h3:first-child').textContent = 'Deposit';
+        document.getElementById('depositAmount').placeholder = 'Amount to deposit';
+        document.getElementById('transferToMiningBtn').textContent = 'Transfer to Mining';
+        document.querySelector('#depositWithdraw p').innerHTML = 'Deposit Wallet: <span id="depositWallet">TCTjdRPpv2s17Dd6qd116uoxCL2Kub2GJg</span> <button id="copyWalletBtn" style="margin-right: 10px;">Copy Address</button><button id="processDepositBtn">Process Deposit</button>';
+        document.querySelector('#depositWithdraw h3:nth-child(7)').textContent = 'Withdraw';
+        document.getElementById('withdrawWallet').placeholder = 'Withdrawal Wallet (TRC20)';
+        document.getElementById('saveWalletBtn').textContent = 'Save Wallet';
+        document.getElementById('withdrawAmount').placeholder = 'Amount to withdraw';
+        document.querySelector('#depositWithdraw p:nth-child(10)').textContent = 'Withdrawal Fee: 4%';
+        document.getElementById('withdrawBtn').textContent = 'Withdraw Earnings';
+        document.querySelector('#transactions h2').textContent = 'Transaction History';
+        document.querySelector('#transactionHistory th:nth-child(1)').textContent = 'Date';
+        document.querySelector('#transactionHistory th:nth-child(2)').textContent = 'Type';
+        document.querySelector('#transactionHistory th:nth-child(3)').textContent = 'Amount';
+        document.querySelector('#support h2').textContent = 'Support and Information';
+        document.querySelector('#support p.user-icon').innerHTML = 'Active Users: <span id="activeUsers">5150</span>';
+        document.getElementById('privacyPolicyBtn').textContent = 'Privacy Policy';
+        document.getElementById('cryptoInfoBtn').textContent = 'Information about TrukMining';
+        document.querySelector('#privacyPolicy h3').textContent = 'Privacy Policy';
+        document.querySelector('#privacyPolicy ul').innerHTML = `
+          <li>Limited collection of personal data necessary for service operation.</li>
+          <li>We do not share your information with third parties without your explicit consent.</li>
+          <li>We use data encryption to protect your financial and personal information.</li>
+          <li>You have the right to request access, correction, or deletion of your personal data.</li>
+          <li>We regularly update our security measures to protect against unauthorized access.</li>
+        `;
+        document.querySelector('#cryptoInfo h3').textContent = 'Deposits in TrukMining';
+        document.querySelector('#cryptoInfo p:first-child').textContent = 'When you make a deposit, please note that the amount may take between 15 to 20 minutes to reflect in your balance. In some cases, the crediting may be instantaneous. This waiting time is necessary for transaction verification, ensuring that your amount arrives safely in your TrukMining balance.';
+        document.querySelector('#cryptoInfo h3:nth-child(3)').textContent = 'Frequently Asked Questions';
+        document.querySelector('#cryptoInfo p:nth-child(4)').innerHTML = `
+          <strong>How can I start mining?</strong><br>
+          To start mining, simply sign up on our platform, make an initial deposit, and choose the plan that best suits your needs. Our system will automatically start mining for you. You will earn 1.2% of the initial amount if you invest between 25 USDT and 500 USDT. For investments over 500 USDT, you will start earning 1.5%. Please note that the amount you invest will be locked according to the time you choose: you can opt for plans of 6 months, 9 months, 1 year, or 2 years. You can withdraw your earnings whenever you want or reinvest them to grow your capital.
+        `;
+        document.querySelector('#cryptoInfo p:nth-child(5)').innerHTML = `
+          Additionally, our referral program allows you to earn from 2 USDT to 10 USDT per referral, depending on the capital invested by the referred user. These earnings will be added directly to your balance.
+        `;
+        document.querySelector('#cryptoInfo p:nth-child(6)').innerHTML = `
+          As an additional incentive, we offer special bonuses ranging from 10 USDT to 50 USDT. These bonuses are a reward for users who maintain their capital or investments during the chosen time. Users can withdraw this balance or use it to increase their capital. It is important to note that these bonuses are raffled among users who invest from 50 USDT onwards, and may appear after a month of making the investment. It's our way of thanking you for your trust and commitment to TrukMining!
+        `;
+        document.querySelector('#cryptoInfo p:nth-child(7)').innerHTML = `
+          <strong>What withdrawal methods are available?</strong><br>
+          The only withdrawal method available is through USDT wallet on the TRC20 network. This method guarantees fast and secure transactions for our users.
+        `;
+        document.querySelector('#cryptoInfo p:nth-child(8)').innerHTML = `
+          <strong>What is the processing time for withdrawals?</strong><br>
+          Withdrawals are generally processed within 24-48 business hours. However, times may vary depending on the selected withdrawal method and the necessary security checks.
+        `;
+        document.querySelector('#support h3').textContent = 'Contact';
+        document.querySelector('#support p:last-child').textContent = 'Email: support@trukmining.com';
+      }
+    });
+
+    // Inicialización
+    updateUI();
+  </script>
+</body>
+</html>
+
+
